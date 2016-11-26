@@ -1,0 +1,65 @@
+<div layout="column" ng-cloak>
+  <md-toolbar layout="row">
+    <div class="md-toolbar-tools">
+      <span>Github followers</span>
+    </div>
+  </md-toolbar>
+  <md-content>
+    <md-tabs md-dynamic-height 
+             md-border-bottom 
+             ng-cloak 
+             md-selected="home.selectedTab">
+      <md-tab label="Chips">
+        <md-content class="md-padding autocomplete" layout="column">
+          <h2 class="md-title">Choose github profiles</h2>
+          <md-contact-chips ng-model="home.asyncProfiles" 
+                            md-contacts="home.delayedQuerySearch($query)" 
+                            md-contact-name="login" 
+                            md-contact-image="avatar_url"
+                            md-contact-email="email" 
+                            md-require-match="true" 
+                            md-highlight-flags="i" 
+                            filter-selected="home.filterSelected" 
+                            placeholder="Profile">
+          </md-contact-chips>
+        </md-content>
+      </md-tab>
+      <md-tab label="Input field">
+        <md-content class="md-padding" 
+                    layout="column">
+          <h2 class="md-title">Type github profiles</h2>
+          <md-input-container md-no-float>
+            <label>Each from new line</label>
+            <textarea ng-model="home.textareaField" 
+                      md-detect-hidden 
+                      md-no-asterisk 
+                      rows="1" 
+                      md-select-on-focus></textarea>
+          </md-input-container>
+        </md-content>
+      </md-tab>
+    </md-tabs>
+  </md-content>
+  <section layout="column" 
+           layout-wrap>
+    <md-button class="md-raised md-primary" 
+               ng-click="home.getUsers();">
+               Search
+    </md-button>
+  </section>
+  <md-content data-ng-if="home.searchResults.length > 0">
+    <md-list flex>
+      <md-subheader class="md-no-sticky">Sort by subscriptions count</md-subheader>
+      <md-list-item ng-repeat="person in home.searchResults | orderBy:'-followers'" 
+                    ng-click="home.goToPerson(person, $event)" 
+                    class="noright">
+        <img alt="{{ person.login }}" 
+             ng-src="{{ person.avatar_url }}" 
+             class="md-avatar" />
+        <p>{{ person.login }}</p>
+        <md-icon md-font-set="material-icons"> star_rate </md-icon>
+        <span ng-bind="person.followers"></span>
+      </md-list-item>
+    </md-list>
+  </md-content>
+</div>
