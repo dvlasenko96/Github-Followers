@@ -1,10 +1,11 @@
 # Github Followers
 
-This project was created as a example of using github api.
+This project was created as a example of using GitHub api.
 
 ## Required environment
-NodeJS (6+) with npm(3+)
-Bower
+- Node (6+) with npm(3+)
+- Bower
+- Gulp
 
 ## Development server
 Run `gulp serve` for a dev server. Navigate to `http://localhost:3000/`. The app will automatically reload if you change any of the source files.
