@@ -15,13 +15,18 @@ export class HomeController {
     this.searchResults = [];
   }
 
+  /**
+   * Get and filter users.
+   */
   querySearch(query) {
-    return this.pendingSearch = this.githubApi.getUsersByQuery(query).then(users => {
+    return this.githubApi.getUsersByQuery(query).then(users => {
       return users.filter(this.filterUsers.bind(this));
     });
   }
 
-  // Query with debounce.
+  /**
+   * Query with debounce.
+   */
   delayedQuerySearch(query) {
     this.cachedQuery = query;
     if (!this.pendingSearch || !this.debounceSearch()) {
@@ -46,7 +51,9 @@ export class HomeController {
     this.cancelSearch = angular.noop;
   }
 
-  // Debounce if querying faster than 300ms
+  /**
+   * Debounce if querying faster than 300ms.
+   */
   debounceSearch() {
     let now = new Date().getMilliseconds();
     this.lastSearch = this.lastSearch || now;
@@ -54,7 +61,9 @@ export class HomeController {
     return ((now - this.lastSearch) < 300);
   }
 
-  // Filter, for display uniq users
+  /**
+   * Filter, for display uniq users.
+   */
   filterUsers(user) {
     for (let i = 0; i < this.asyncProfiles.length; ++i) {
       if (this.asyncProfiles[i].id === user.id) {
@@ -64,7 +73,9 @@ export class HomeController {
     return true;
   }
 
-  // Get list of github users and sort them by followers
+  /**
+   * Get list of github users and sort them by followers.
+   */
   getUsers() {
     let userIds = [];
     // First of all, we need to make similar format for our cases
@@ -86,6 +97,9 @@ export class HomeController {
     });
   }
 
+  /**
+   * Open profile link in a new tab.
+   */
   goToPerson(person) {
     this.$window.open(person.html_url, '_blank');
   }

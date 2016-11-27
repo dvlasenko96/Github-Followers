@@ -10,6 +10,9 @@ export class GithubApiService {
     this.clientSecret = 'f9a95c162d88623e4c1ab71047bf8256550d45bc';
   }
 
+  /**
+   * get array of predictions from github
+   */
   getUsersByQuery(query) {
     return this.$http
       .get(`${this.apiHost}/search/users`, {
@@ -24,6 +27,10 @@ export class GithubApiService {
       });
   }
 
+  /**
+   * Get full information about user id.
+   * If there are not user with id, it is received 404 error. 
+   */
   getUserById(userId) {
     return this.$http
       .get(`${this.apiHost}/users/${userId}`, {
@@ -36,7 +43,8 @@ export class GithubApiService {
         return res.data;
       })
       .catch(() => {
-          return {};
+        // TODO: handle error, if there are not user with id.
+        return {};
       });
   }
 }
